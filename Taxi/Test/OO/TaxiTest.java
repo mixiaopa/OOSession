@@ -18,61 +18,59 @@ public class TaxiTest {
 
     @org.junit.Test
     public void shouldCharge6WhenDistanceIs1() throws Exception {
-        assertEquals(6, taxi.getFee(1), 0.1);
+        assertEquals(6, taxi.getFee(1, 0), 0.1);
     }
 
     @Test
     public void shouldCharge6WhenDistanceIs2() throws Exception {
-        assertEquals(6, taxi.getFee(2), 0.1);
+        assertEquals(6, taxi.getFee(2, 0), 0.1);
     }
 
     @Test
     public void shouldChargeMoreThan6WhenDistanceMoreThan2() throws Exception {
-        assertThat(taxi.getFee(2.1) - 6 > 0, is(true));
+        assertThat(taxi.getFee(2.1, 0) - 6 > 0, is(true));
     }
 
     @Test
     public void shouldCharge10WhenDistanceIs7() throws Exception {
-        assertEquals(10.0, taxi.getFee(7), 0.1);
+        assertEquals(10.0, taxi.getFee(7, 0), 0.1);
     }
 
     @Test
     public void shouldCharge10p8WhenDistanceIs8() throws Exception {
-        assertEquals(10.8, taxi.getFee(8), 0.000001);
+        assertEquals(10.8, taxi.getFee(8, 0), 0.000001);
     }
 
     @Test
     public void shouldCharge12WhenDistanceIs9() throws Exception {
-        assertEquals(12, taxi.getFee(9), 0.000001);
+        assertEquals(12, taxi.getFee(9, 0), 0.000001);
     }
 
     @Test
     public void shouldCharge13p2WhenDistanceIs10() throws Exception {
-        assertEquals(13.2, taxi.getFee(10), 0.000001);
+        assertEquals(13.2, taxi.getFee(10, 0), 0.000001);
     }
 
     @Test
     public void shouldCharge6p25WhenDistanceIs1AndStopTimeIs1() throws Exception {
-        taxi.setStopTime(1);
-        assertEquals(6.25, taxi.getFee(1), 0.0000001);
+        double fee = taxi.getFee(1, 1);
+        assertEquals(6.25, fee, 0.0000001);
     }
 
     @Test
     public void shouldCharge6p5WhenDistanceIs1AndStopTimeIs2() throws Exception {
-        taxi.setStopTime(2);
-        assertEquals(6.5, taxi.getFee(1), 0.0000001);
+        assertEquals(6.5, taxi.getFee(1, 2), 0.0000001);
+        assertEquals(6, taxi.getFee(1, 0), 0.0000001);
     }
 
     @Test
     public void shouldCharge7AtLastWhenDistanceIs1AndStopTimeIs5() throws Exception {
-        taxi.setStopTime(5);
-        assertEquals("7", taxi.getFinalCharge(1));
+        assertEquals("7", taxi.getFinalCharge(1, 5));
     }
 
     @Test
     public void shouldCharge6AtLastWhenDistanceIs1AndStopTimeIs1() throws Exception {
-        taxi.setStopTime(1);
-        assertEquals("6", taxi.getFinalCharge(1));
+        assertEquals("6", taxi.getFinalCharge(1, 1));
     }
 
     @Test
